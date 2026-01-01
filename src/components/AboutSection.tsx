@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { AnimatedBubbles, SwirlingGlow } from "./AnimatedBubbles";
 
 const aboutCards = [
   {
@@ -26,10 +27,11 @@ const containerVariants = {
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: { opacity: 0, y: 40, scale: 0.95 },
   visible: {
     opacity: 1,
     y: 0,
+    scale: 1,
     transition: {
       duration: 0.6,
       ease: "easeOut",
@@ -40,35 +42,12 @@ const cardVariants = {
 export const AboutSection = () => {
   return (
     <section className="relative py-32 overflow-hidden">
-      {/* Swirling emerald glow background */}
-      <div className="absolute inset-0 bg-tactical-darker">
-        {/* Large ambient glow - left */}
-        <motion.div 
-          className="absolute -left-40 top-1/3 w-[600px] h-[600px] rounded-full"
-          style={{
-            background: "radial-gradient(circle, hsl(var(--primary) / 0.08) 0%, transparent 60%)",
-            filter: "blur(80px)",
-          }}
-          animate={{
-            x: [0, 30, 0],
-            y: [0, -20, 0],
-          }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-        />
-        {/* Large ambient glow - right */}
-        <motion.div 
-          className="absolute -right-40 bottom-1/4 w-[500px] h-[500px] rounded-full"
-          style={{
-            background: "radial-gradient(circle, hsl(var(--primary) / 0.06) 0%, transparent 60%)",
-            filter: "blur(60px)",
-          }}
-          animate={{
-            x: [0, -20, 0],
-            y: [0, 30, 0],
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        />
-      </div>
+      {/* Dark base background */}
+      <div className="absolute inset-0 bg-tactical-darker" />
+      
+      {/* Animated swirling glow bubbles - matching Figma design */}
+      <SwirlingGlow />
+      <AnimatedBubbles />
 
       <div className="max-w-6xl mx-auto px-4 relative z-10">
         <motion.h2
@@ -93,17 +72,29 @@ export const AboutSection = () => {
               key={index}
               variants={cardVariants}
               whileHover={{ 
-                y: -8,
-                boxShadow: "0 20px 40px rgba(0, 0, 0, 0.3), 0 0 60px hsl(var(--primary) / 0.1)"
+                y: -10,
+                scale: 1.02,
+                boxShadow: "0 25px 50px rgba(0, 0, 0, 0.4), 0 0 80px hsl(var(--primary) / 0.15)"
               }}
-              className="card-defence p-8 text-center group transition-all duration-500"
+              className="card-defence p-8 text-center group transition-all duration-500 backdrop-blur-sm"
             >
-              <h3 className="font-display text-sm tracking-wider text-primary mb-6 group-hover:text-emerald-bright transition-colors">
+              <motion.h3 
+                className="font-display text-sm tracking-wider text-primary mb-6 group-hover:text-emerald-bright transition-colors"
+                whileHover={{ scale: 1.05 }}
+              >
                 {card.title}
-              </h3>
+              </motion.h3>
               <p className="text-muted-foreground text-sm leading-relaxed">
                 {card.description}
               </p>
+              
+              {/* Subtle inner glow on hover */}
+              <motion.div 
+                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                style={{
+                  background: "radial-gradient(circle at center, hsl(var(--primary) / 0.05) 0%, transparent 70%)",
+                }}
+              />
             </motion.div>
           ))}
         </motion.div>
@@ -117,7 +108,7 @@ export const AboutSection = () => {
         >
           <motion.button 
             className="btn-tactical px-8 py-3 rounded-full"
-            whileHover={{ scale: 1.02 }}
+            whileHover={{ scale: 1.05, boxShadow: "0 0 25px hsl(var(--primary) / 0.3)" }}
             whileTap={{ scale: 0.98 }}
           >
             Explore Our Mission
