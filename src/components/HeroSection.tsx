@@ -1,6 +1,189 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
+// Animated 3D Drone Component
+const AnimatedDrone = () => {
+  return (
+    <motion.div
+      className="relative"
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 1.2, ease: "easeOut" }}
+    >
+      {/* Main Drone Container */}
+      <motion.div
+        className="relative"
+        animate={{ 
+          y: [0, -15, 0],
+          rotateX: [0, 5, 0],
+          rotateZ: [0, 2, -2, 0]
+        }}
+        transition={{ 
+          duration: 6, 
+          repeat: Infinity, 
+          ease: "easeInOut" 
+        }}
+        style={{ 
+          transformStyle: "preserve-3d",
+          perspective: "1000px"
+        }}
+      >
+        <svg 
+          width="200" 
+          height="100" 
+          viewBox="0 0 200 100" 
+          fill="none" 
+          xmlns="http://www.w3.org/2000/svg"
+          className="drop-shadow-2xl"
+        >
+          {/* Main Fuselage */}
+          <motion.ellipse 
+            cx="100" 
+            cy="50" 
+            rx="35" 
+            ry="12" 
+            fill="hsl(var(--foreground))" 
+            fillOpacity="0.95"
+          />
+          <ellipse cx="100" cy="50" rx="30" ry="10" fill="hsl(var(--tactical-darker))" fillOpacity="0.3"/>
+          
+          {/* Left Wing */}
+          <motion.path 
+            d="M10 48L65 50L10 52" 
+            fill="hsl(var(--foreground))" 
+            fillOpacity="0.9"
+            animate={{ y: [0, -2, 0] }}
+            transition={{ duration: 0.5, repeat: Infinity, ease: "linear" }}
+          />
+          <path d="M0 46L60 50L0 54" stroke="hsl(var(--foreground))" strokeWidth="0.5" fill="none" strokeOpacity="0.4"/>
+          
+          {/* Right Wing */}
+          <motion.path 
+            d="M190 48L135 50L190 52" 
+            fill="hsl(var(--foreground))" 
+            fillOpacity="0.9"
+            animate={{ y: [0, -2, 0] }}
+            transition={{ duration: 0.5, repeat: Infinity, ease: "linear", delay: 0.1 }}
+          />
+          <path d="M200 46L140 50L200 54" stroke="hsl(var(--foreground))" strokeWidth="0.5" fill="none" strokeOpacity="0.4"/>
+          
+          {/* Tail Section */}
+          <path d="M92 60L100 85L108 60" fill="hsl(var(--foreground))" fillOpacity="0.85"/>
+          <path d="M88 62L100 90L112 62" stroke="hsl(var(--foreground))" strokeWidth="0.5" fill="none" strokeOpacity="0.3"/>
+          
+          {/* Cockpit Sensor */}
+          <ellipse cx="100" cy="47" rx="10" ry="4" fill="hsl(var(--primary))" fillOpacity="0.7"/>
+          <motion.ellipse 
+            cx="100" 
+            cy="47" 
+            rx="6" 
+            ry="2" 
+            fill="hsl(var(--primary))"
+            animate={{ opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          />
+          
+          {/* Engine Pods - Left */}
+          <circle cx="25" cy="50" r="4" fill="hsl(var(--foreground))" fillOpacity="0.9"/>
+          <motion.circle 
+            cx="25" 
+            cy="50" 
+            r="2" 
+            fill="hsl(var(--primary))"
+            animate={{ opacity: [0.3, 1, 0.3] }}
+            transition={{ duration: 0.8, repeat: Infinity }}
+          />
+          
+          {/* Engine Pods - Right */}
+          <circle cx="175" cy="50" r="4" fill="hsl(var(--foreground))" fillOpacity="0.9"/>
+          <motion.circle 
+            cx="175" 
+            cy="50" 
+            r="2" 
+            fill="hsl(var(--primary))"
+            animate={{ opacity: [0.3, 1, 0.3] }}
+            transition={{ duration: 0.8, repeat: Infinity, delay: 0.2 }}
+          />
+
+          {/* Propeller Blur - Left */}
+          <motion.ellipse 
+            cx="8" 
+            cy="50" 
+            rx="8" 
+            ry="1" 
+            fill="hsl(var(--foreground))"
+            fillOpacity="0.4"
+            animate={{ scaleX: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+            transition={{ duration: 0.15, repeat: Infinity }}
+          />
+          
+          {/* Propeller Blur - Right */}
+          <motion.ellipse 
+            cx="192" 
+            cy="50" 
+            rx="8" 
+            ry="1" 
+            fill="hsl(var(--foreground))"
+            fillOpacity="0.4"
+            animate={{ scaleX: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+            transition={{ duration: 0.15, repeat: Infinity, delay: 0.05 }}
+          />
+
+          {/* Wing Tips */}
+          <motion.circle 
+            cx="5" 
+            cy="50" 
+            r="3" 
+            fill="hsl(var(--primary))"
+            animate={{ opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+          />
+          <motion.circle 
+            cx="195" 
+            cy="50" 
+            r="3" 
+            fill="hsl(var(--primary))"
+            animate={{ opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 1.5, repeat: Infinity, delay: 0.5 }}
+          />
+        </svg>
+
+        {/* Shadow */}
+        <motion.div
+          className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-32 h-4 rounded-full bg-primary/10 blur-md"
+          animate={{ 
+            scale: [1, 1.1, 1],
+            opacity: [0.3, 0.5, 0.3]
+          }}
+          transition={{ duration: 6, repeat: Infinity }}
+        />
+      </motion.div>
+
+      {/* Trailing glow particles */}
+      <div className="absolute -left-4 top-1/2 -translate-y-1/2">
+        {[...Array(3)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 rounded-full bg-primary"
+            style={{ left: -i * 8 }}
+            animate={{ 
+              opacity: [0, 0.6, 0],
+              x: [-10, -30],
+              scale: [1, 0.5]
+            }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              delay: i * 0.3,
+              ease: "easeOut"
+            }}
+          />
+        ))}
+      </div>
+    </motion.div>
+  );
+};
+
 export const HeroSection = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
@@ -43,41 +226,10 @@ export const HeroSection = () => {
 
       {/* Hero Content */}
       <div className="relative z-10 flex flex-col items-center text-center px-4 pt-20">
-        {/* Drone Icon */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8, y: -20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
-          className="mb-8"
-        >
-          <motion.svg 
-            width="160" 
-            height="80" 
-            viewBox="0 0 160 80" 
-            fill="none" 
-            xmlns="http://www.w3.org/2000/svg" 
-            className="opacity-90"
-            animate={{ y: [0, -8, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          >
-            {/* Main Body */}
-            <ellipse cx="80" cy="40" rx="20" ry="8" fill="hsl(var(--foreground))" fillOpacity="0.95"/>
-            {/* Left Wing */}
-            <path d="M15 38L60 40L15 42" fill="hsl(var(--foreground))" fillOpacity="0.9"/>
-            <path d="M5 37L55 40L5 43" stroke="hsl(var(--foreground))" strokeWidth="0.5" fill="none" strokeOpacity="0.5"/>
-            {/* Right Wing */}
-            <path d="M145 38L100 40L145 42" fill="hsl(var(--foreground))" fillOpacity="0.9"/>
-            <path d="M155 37L105 40L155 43" stroke="hsl(var(--foreground))" strokeWidth="0.5" fill="none" strokeOpacity="0.5"/>
-            {/* Tail */}
-            <path d="M75 46L80 65L85 46" fill="hsl(var(--foreground))" fillOpacity="0.8"/>
-            <path d="M72 48L80 70L88 48" stroke="hsl(var(--foreground))" strokeWidth="0.5" fill="none" strokeOpacity="0.4"/>
-            {/* Cockpit */}
-            <ellipse cx="80" cy="38" rx="6" ry="3" fill="hsl(var(--primary))" fillOpacity="0.6"/>
-            {/* Wing Tips */}
-            <circle cx="10" cy="40" r="2" fill="hsl(var(--primary))" fillOpacity="0.8"/>
-            <circle cx="150" cy="40" r="2" fill="hsl(var(--primary))" fillOpacity="0.8"/>
-          </motion.svg>
-        </motion.div>
+        {/* Animated 3D Drone */}
+        <div className="mb-8">
+          <AnimatedDrone />
+        </div>
 
         {/* Company Name */}
         <motion.h1
@@ -109,6 +261,12 @@ export const HeroSection = () => {
             className="absolute -inset-2 bg-gradient-to-r from-transparent via-primary/40 to-transparent rounded-full blur-lg"
             animate={{ opacity: [0.2, 0.5, 0.2] }}
             transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+          />
+          {/* Scanning light */}
+          <motion.div
+            className="absolute top-0 bottom-0 w-20 bg-gradient-to-r from-transparent via-primary/80 to-transparent rounded-full"
+            animate={{ x: ["-100%", "400%"] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", repeatDelay: 1 }}
           />
         </motion.div>
 
