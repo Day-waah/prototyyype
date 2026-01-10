@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
-
 /* Defence-Tech Design System */
 @layer base {
   :root {
@@ -83,13 +81,23 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Exo 2', sans-serif;
   }
 }
 
 @layer components {
   .font-display {
     font-family: 'Orbitron', sans-serif;
+    letter-spacing: 0.05em;
+  }
+
+  .font-tech {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 500;
+  }
+
+  .font-body {
+    font-family: 'Exo 2', sans-serif;
   }
 
   .text-gradient {

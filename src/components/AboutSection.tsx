@@ -21,20 +21,27 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.15,
+      staggerChildren: 0.2,
+      delayChildren: 0.1,
     },
   },
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 40, scale: 0.95 },
+  hidden: { 
+    opacity: 0, 
+    y: 60, 
+    scale: 0.9,
+    rotateX: -15,
+  },
   visible: {
     opacity: 1,
     y: 0,
     scale: 1,
+    rotateX: 0,
     transition: {
-      duration: 0.6,
-      ease: "easeOut",
+      duration: 0.7,
+      ease: [0.22, 1, 0.36, 1],
     },
   },
 };
@@ -64,35 +71,47 @@ export const AboutSection = () => {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid md:grid-cols-3 gap-6"
+          viewport={{ once: true, margin: "-50px" }}
+          className="grid md:grid-cols-3 gap-6 perspective-1000"
         >
           {aboutCards.map((card, index) => (
             <motion.div
               key={index}
               variants={cardVariants}
               whileHover={{ 
-                y: -10,
-                scale: 1.02,
-                boxShadow: "0 25px 50px rgba(0, 0, 0, 0.4), 0 0 80px hsl(var(--primary) / 0.15)"
+                y: -15,
+                scale: 1.03,
+                rotateY: 5,
+                boxShadow: "0 30px 60px rgba(0, 0, 0, 0.5), 0 0 100px hsl(var(--primary) / 0.2)"
               }}
-              className="card-defence p-8 text-center group transition-all duration-500 backdrop-blur-sm"
+              whileTap={{ scale: 0.98 }}
+              className="card-defence p-8 text-center group transition-all duration-500 backdrop-blur-sm cursor-pointer preserve-3d"
+              style={{ transformStyle: 'preserve-3d' }}
             >
               <motion.h3 
                 className="font-display text-sm tracking-wider text-primary mb-6 group-hover:text-emerald-bright transition-colors"
-                whileHover={{ scale: 1.05 }}
               >
                 {card.title}
               </motion.h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">
+              <p className="font-body text-muted-foreground text-sm leading-relaxed">
                 {card.description}
               </p>
               
-              {/* Subtle inner glow on hover */}
+              {/* Glowing border on hover */}
               <motion.div 
                 className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                 style={{
-                  background: "radial-gradient(circle at center, hsl(var(--primary) / 0.05) 0%, transparent 70%)",
+                  background: "radial-gradient(circle at center, hsl(var(--primary) / 0.08) 0%, transparent 70%)",
+                  boxShadow: "inset 0 0 30px hsl(var(--primary) / 0.1)"
+                }}
+              />
+              
+              {/* Corner accent */}
+              <motion.div
+                className="absolute top-0 right-0 w-12 h-12 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                style={{
+                  background: "linear-gradient(135deg, transparent 50%, hsl(var(--primary) / 0.2) 100%)",
+                  borderRadius: "0 1rem 0 0"
                 }}
               />
             </motion.div>
@@ -107,7 +126,7 @@ export const AboutSection = () => {
           className="text-center mt-12"
         >
           <motion.button 
-            className="btn-tactical px-8 py-3 rounded-full"
+            className="btn-tactical px-8 py-3 rounded-full font-tech"
             whileHover={{ scale: 1.05, boxShadow: "0 0 25px hsl(var(--primary) / 0.3)" }}
             whileTap={{ scale: 0.98 }}
           >

@@ -40,18 +40,34 @@ const WavyLinesCorner = ({ position }: { position: 'left' | 'right' }) => (
   </svg>
 );
 
+const nodeVariants = {
+  hidden: { opacity: 0, y: 30, scale: 0 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      delay: i * 0.2 + 0.5,
+      duration: 0.5,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  }),
+};
+
 const TimelineNode = ({ index, title }: { index: number; title: string }) => (
   <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
+    custom={index}
+    variants={nodeVariants}
+    initial="hidden"
+    whileInView="visible"
     viewport={{ once: true }}
-    transition={{ delay: index * 0.2, duration: 0.5 }}
-    className="flex flex-col items-center group"
+    whileHover={{ scale: 1.1 }}
+    whileTap={{ scale: 0.95 }}
+    className="flex flex-col items-center group cursor-pointer"
   >
     {/* Node */}
     <motion.div 
       className="relative w-6 h-6 mb-4"
-      whileHover={{ scale: 1.3 }}
     >
       {/* Outer glow */}
       <motion.div
@@ -73,7 +89,7 @@ const TimelineNode = ({ index, title }: { index: number; title: string }) => (
     </motion.div>
     
     {/* Title */}
-    <span className="text-primary text-sm font-display text-center group-hover:text-emerald-bright transition-colors whitespace-nowrap">
+    <span className="font-tech text-primary text-sm text-center group-hover:text-emerald-bright transition-colors whitespace-nowrap">
       {title}
     </span>
   </motion.div>
@@ -89,8 +105,8 @@ export const FutureVisionSection = () => {
       <div className="max-w-5xl mx-auto px-4 relative z-10">
         {/* Faded IMPLEMENTATION text */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1 }}
           className="text-center mb-4"

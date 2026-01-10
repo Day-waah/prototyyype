@@ -19,32 +19,55 @@ const newsItems = [
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+      delayChildren: 0.3,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { 
+    opacity: 0, 
+    y: 60, 
+    scale: 0.9,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.7,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
+};
+
 interface NewsCardProps {
   item: typeof newsItems[0];
   index: number;
   onClick: () => void;
 }
 
-const NewsCard = ({ item, index, onClick }: NewsCardProps) => (
+const NewsCard = ({ item, onClick }: NewsCardProps) => (
   <motion.div
-    initial={{ opacity: 0, y: 40 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ delay: index * 0.15, duration: 0.6 }}
+    variants={cardVariants}
     onClick={onClick}
+    whileHover={{ y: -10, scale: 1.02 }}
+    whileTap={{ scale: 0.98 }}
     className="group cursor-pointer"
   >
-    <motion.div
-      whileHover={{ y: -5 }}
-      transition={{ duration: 0.3 }}
-      className="relative"
-    >
+    <div className="relative">
       {/* Image */}
       <div className="relative h-64 rounded-lg overflow-hidden mb-4">
         <motion.img
           src={item.image}
           alt="News"
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-tactical-darker via-transparent to-transparent opacity-60" />
         
@@ -64,10 +87,10 @@ const NewsCard = ({ item, index, onClick }: NewsCardProps) => (
       </div>
 
       {/* Description */}
-      <p className="text-muted-foreground text-sm leading-relaxed">
+      <p className="font-body text-muted-foreground text-sm leading-relaxed">
         {item.description}
       </p>
-    </motion.div>
+    </div>
   </motion.div>
 );
 
@@ -80,7 +103,7 @@ const NewsBanner = () => (
       transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
     >
       {[...Array(4)].map((_, i) => (
-        <span key={i} className="text-primary/60 text-sm mx-8 font-display">
+        <span key={i} className="text-primary/60 text-sm mx-8 font-tech">
           LATEST NEWS • TRAINING UPDATES • PRODUCT LAUNCHES • DEFENCE INNOVATIONS • 
         </span>
       ))}
@@ -108,7 +131,13 @@ export const MediaSection = () => {
         <NewsBanner />
 
         {/* News Grid */}
-        <div className="grid md:grid-cols-3 gap-8 mb-12">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          className="grid md:grid-cols-3 gap-8 mb-12"
+        >
           {newsItems.map((item, index) => (
             <NewsCard 
               key={index} 
@@ -117,7 +146,7 @@ export const MediaSection = () => {
               onClick={() => setSelectedNews(selectedNews === index ? null : index)}
             />
           ))}
-        </div>
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -127,7 +156,7 @@ export const MediaSection = () => {
           className="text-center"
         >
           <motion.button 
-            className="btn-tactical px-8 py-3 rounded-full"
+            className="btn-tactical px-8 py-3 rounded-full font-tech"
             whileHover={{ scale: 1.02, boxShadow: "0 0 30px hsl(var(--primary) / 0.3)" }}
             whileTap={{ scale: 0.98 }}
           >

@@ -21,20 +21,25 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.15,
+      staggerChildren: 0.2,
+      delayChildren: 0.3,
     },
   },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, x: -40, scale: 0.95 },
+  hidden: { 
+    opacity: 0, 
+    x: -60, 
+    scale: 0.9,
+  },
   visible: {
     opacity: 1,
     x: 0,
     scale: 1,
     transition: {
-      duration: 0.6,
-      ease: "easeOut",
+      duration: 0.7,
+      ease: [0.22, 1, 0.36, 1],
     },
   },
 };
@@ -73,7 +78,7 @@ export const TrainingSection = () => {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "-50px" }}
           className="space-y-5"
         >
           {trainingPrograms.map((program, index) => (
@@ -81,9 +86,10 @@ export const TrainingSection = () => {
               key={index}
               variants={itemVariants}
               whileHover={{ 
-                x: 10,
+                x: 15,
                 scale: 1.02,
               }}
+              whileTap={{ scale: 0.98 }}
               className="relative group cursor-pointer"
             >
               {/* Pill-shaped container */}
@@ -98,7 +104,7 @@ export const TrainingSection = () => {
                     {program.title}
                   </span>
                 </div>
-                <p className="text-muted-foreground text-sm flex-1 relative z-10">
+                <p className="font-body text-muted-foreground text-sm flex-1 relative z-10">
                   {program.description}
                 </p>
                 
@@ -121,7 +127,7 @@ export const TrainingSection = () => {
           className="text-center mt-14"
         >
           <motion.button 
-            className="btn-tactical px-8 py-3 rounded-full"
+            className="btn-tactical px-8 py-3 rounded-full font-tech"
             whileHover={{ scale: 1.02, boxShadow: "0 0 30px hsl(var(--primary) / 0.3)" }}
             whileTap={{ scale: 0.98 }}
           >

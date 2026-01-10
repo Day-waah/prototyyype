@@ -8,6 +8,34 @@ const jobCategories = [
   "Interns",
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { 
+    opacity: 0, 
+    y: 40, 
+    scale: 0.9,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.6,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
+};
+
 export const CareersSection = () => {
   return (
     <section id="careers" className="relative py-24 overflow-hidden bg-tactical-darker">
@@ -34,7 +62,7 @@ export const CareersSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3, duration: 0.6 }}
-              className="text-foreground/80 text-sm md:text-base mb-2"
+              className="font-body text-foreground/80 text-sm md:text-base mb-2"
             >
               Find jobs, employment and career opportunities
             </motion.p>
@@ -63,22 +91,26 @@ export const CareersSection = () => {
           JOB CATEGORIES
         </motion.h3>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-          {jobCategories.map((category, index) => (
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12"
+        >
+          {jobCategories.map((category) => (
             <motion.div
               key={category}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
+              variants={cardVariants}
               whileHover={{ 
-                scale: 1.05,
-                borderColor: "hsl(var(--primary) / 0.6)"
+                scale: 1.08,
+                y: -5,
               }}
+              whileTap={{ scale: 0.95 }}
               className="relative group cursor-pointer"
             >
-              <div className="bg-tactical-dark/50 border border-primary/20 rounded-2xl py-6 px-8 text-center transition-all duration-300 group-hover:bg-tactical-dark/80">
-                <span className="text-foreground text-sm md:text-base font-display">
+              <div className="bg-tactical-dark/50 border border-primary/20 rounded-2xl py-6 px-8 text-center transition-all duration-300 group-hover:bg-tactical-dark/80 group-hover:border-primary/50">
+                <span className="font-tech text-foreground text-sm md:text-base">
                   {category}
                 </span>
               </div>
@@ -89,7 +121,7 @@ export const CareersSection = () => {
               />
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -100,8 +132,8 @@ export const CareersSection = () => {
         >
           <motion.button 
             className="bg-primary/90 text-tactical-darker font-display px-10 py-3 rounded-md hover:bg-primary transition-colors"
-            whileHover={{ scale: 1.02, boxShadow: "0 0 20px hsl(var(--primary) / 0.4)" }}
-            whileTap={{ scale: 0.98 }}
+            whileHover={{ scale: 1.05, boxShadow: "0 0 25px hsl(var(--primary) / 0.5)" }}
+            whileTap={{ scale: 0.95 }}
           >
             Apply now!
           </motion.button>
