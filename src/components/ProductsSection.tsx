@@ -30,6 +30,36 @@ interface ProductCardProps {
   onClick: () => void;
 }
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { 
+    opacity: 0, 
+    y: 80, 
+    scale: 0.8,
+    rotateY: -20,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    rotateY: 0,
+    transition: {
+      duration: 0.8,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
+};
+
 const ProductCard = ({ product, index, isSelected, onClick }: ProductCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
   
@@ -39,8 +69,8 @@ const ProductCard = ({ product, index, isSelected, onClick }: ProductCardProps) 
   const mouseXSpring = useSpring(x, { stiffness: 200, damping: 20 });
   const mouseYSpring = useSpring(y, { stiffness: 200, damping: 20 });
   
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["15deg", "-15deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-15deg", "15deg"]);
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["20deg", "-20deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-20deg", "20deg"]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
@@ -63,13 +93,11 @@ const ProductCard = ({ product, index, isSelected, onClick }: ProductCardProps) 
   return (
     <motion.div
       ref={cardRef}
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.1, duration: 0.5 }}
+      variants={cardVariants}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
+      whileTap={{ scale: 0.95 }}
       className="cursor-pointer perspective-1000"
     >
       <motion.div
@@ -78,11 +106,11 @@ const ProductCard = ({ product, index, isSelected, onClick }: ProductCardProps) 
           rotateY,
           transformStyle: "preserve-3d",
         }}
-        whileHover={{ scale: 1.05 }}
+        whileHover={{ scale: 1.08, z: 50 }}
         transition={{ duration: 0.3 }}
         className="relative group"
       >
-        <div className={`relative overflow-hidden rounded-lg transition-all duration-500 ${isSelected ? 'ring-2 ring-primary shadow-lg shadow-primary/20' : ''}`}>
+        <div className={`relative overflow-hidden rounded-lg transition-all duration-500 ${isSelected ? 'ring-2 ring-primary shadow-lg shadow-primary/30' : ''}`}>
           {/* Image Container */}
           <div className="relative h-40 overflow-hidden bg-tactical-darker rounded-lg">
             <motion.img
@@ -124,7 +152,7 @@ const ProductCard = ({ product, index, isSelected, onClick }: ProductCardProps) 
 
         {/* Glow Effect */}
         <motion.div 
-          className="absolute -inset-2 bg-gradient-to-r from-primary/0 via-primary/20 to-primary/0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur-xl"
+          className="absolute -inset-2 bg-gradient-to-r from-primary/0 via-primary/30 to-primary/0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur-xl"
         />
       </motion.div>
     </motion.div>
@@ -184,7 +212,13 @@ export const ProductsSection = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="relative bg-tactical-dark/50 border border-primary/20 rounded-2xl p-8 backdrop-blur-sm"
         >
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            className="grid grid-cols-2 md:grid-cols-4 gap-6"
+          >
             {products.map((product, index) => (
               <ProductCard 
                 key={product.name} 
@@ -194,7 +228,7 @@ export const ProductsSection = () => {
                 onClick={() => setSelectedProduct(selectedProduct === index ? null : index)}
               />
             ))}
-          </div>
+          </motion.div>
         </motion.div>
 
         <motion.div
@@ -205,7 +239,7 @@ export const ProductsSection = () => {
           className="text-center mt-12"
         >
           <motion.button 
-            className="btn-tactical px-8 py-3 rounded-full"
+            className="btn-tactical px-8 py-3 rounded-full font-tech"
             whileHover={{ scale: 1.02, boxShadow: "0 0 30px hsl(var(--primary) / 0.3)" }}
             whileTap={{ scale: 0.98 }}
           >
