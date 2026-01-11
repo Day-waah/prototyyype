@@ -16,21 +16,19 @@ const Index = () => {
     <main className="min-h-screen bg-background">
       <Navbar />
       <HeroSection />
-      <SectionTransition variant="gradient" />
       <PrecisionSection />
       <SectionTransition variant="line" />
       <AboutSection />
       <SectionTransition variant="dots" />
       <ProductsSection />
-      <SectionTransition variant="circuit" />
-      <TrainingSection />
       <SectionTransition variant="line" />
+      <TrainingSection />
+      <SectionTransition variant="dots" />
       <FutureVisionSection />
-      <SectionTransition variant="gradient" />
+      <SectionTransition variant="line" />
       <CareersSection />
       <SectionTransition variant="dots" />
       <MediaSection />
-      <SectionTransition variant="line" />
       <ContactForm />
       <Footer />
     </main>

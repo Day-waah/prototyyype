@@ -12,19 +12,15 @@ export const Navbar = () => {
       className="fixed top-0 left-0 right-0 z-50 px-6 py-4"
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        {/* Logo with green glow effect */}
+        {/* Logo */}
         <motion.div
           whileHover={{ scale: 1.02 }}
-          className="relative flex items-center"
+          className="flex items-center"
         >
-          {/* Green glow background */}
-          <div className="absolute -inset-4 bg-primary/20 rounded-full blur-xl" />
-          <div className="absolute -inset-2 bg-primary/10 rounded-full blur-md" />
-          
           <img 
             src={logo} 
             alt="Dhanush R.A.S." 
-            className="relative h-12 w-auto brightness-110 drop-shadow-[0_0_10px_hsl(152,76%,42%,0.5)]"
+            className="h-12 w-auto"
           />
         </motion.div>
 
