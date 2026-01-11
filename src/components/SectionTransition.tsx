@@ -8,7 +8,7 @@ interface SectionTransitionProps {
 export const SectionTransition = ({ variant = 'gradient', className = '' }: SectionTransitionProps) => {
   if (variant === 'gradient') {
     return (
-      <div className={`relative h-32 overflow-hidden ${className}`}>
+      <div className={`relative h-16 md:h-20 overflow-hidden ${className}`}>
         {/* Gradient fade */}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent" />
         
@@ -18,14 +18,7 @@ export const SectionTransition = ({ variant = 'gradient', className = '' }: Sect
           whileInView={{ scaleX: 1, opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1.2, ease: "easeOut" }}
-          className="absolute top-1/2 left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent"
-        />
-        
-        {/* Scanning light */}
-        <motion.div
-          className="absolute top-1/2 left-0 w-20 h-px bg-gradient-to-r from-transparent via-primary to-transparent"
-          animate={{ x: ["0%", "500%"] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", repeatDelay: 2 }}
+          className="absolute top-1/2 left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"
         />
       </div>
     );
@@ -33,36 +26,29 @@ export const SectionTransition = ({ variant = 'gradient', className = '' }: Sect
 
   if (variant === 'line') {
     return (
-      <div className={`relative h-20 flex items-center justify-center ${className}`}>
+      <div className={`relative h-12 md:h-16 flex items-center justify-center ${className}`}>
         <motion.div
           initial={{ width: 0 }}
-          whileInView={{ width: "60%" }}
+          whileInView={{ width: "50%" }}
           viewport={{ once: true }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent relative"
-        >
-          {/* Pulse at center */}
-          <motion.div
-            className="absolute left-1/2 -translate-x-1/2 -top-1 w-2 h-2 rounded-full bg-primary/50"
-            animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          />
-        </motion.div>
+          className="h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent"
+        />
       </div>
     );
   }
 
   if (variant === 'dots') {
     return (
-      <div className={`relative h-16 flex items-center justify-center gap-4 ${className}`}>
-        {[...Array(5)].map((_, i) => (
+      <div className={`relative h-10 md:h-12 flex items-center justify-center gap-3 ${className}`}>
+        {[...Array(3)].map((_, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, scale: 0 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.1, duration: 0.3 }}
-            className="w-1.5 h-1.5 rounded-full bg-primary/40"
+            className="w-1 h-1 rounded-full bg-primary/30"
           />
         ))}
       </div>
@@ -71,25 +57,13 @@ export const SectionTransition = ({ variant = 'gradient', className = '' }: Sect
 
   if (variant === 'circuit') {
     return (
-      <div className={`relative h-24 overflow-hidden ${className}`}>
-        <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
-          <motion.path
-            d="M 0 50% H 30% L 35% 30% H 50% L 55% 70% H 70% L 75% 50% H 100%"
-            stroke="hsl(var(--primary))"
-            strokeWidth="1"
-            fill="none"
-            strokeOpacity="0.3"
-            initial={{ pathLength: 0 }}
-            whileInView={{ pathLength: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
-          />
-        </svg>
-        {/* Moving dot */}
+      <div className={`relative h-12 md:h-16 flex items-center justify-center ${className}`}>
         <motion.div
-          className="absolute top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-primary shadow-lg shadow-primary/50"
-          animate={{ x: ["0%", "100%"] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+          initial={{ width: 0 }}
+          whileInView={{ width: "40%" }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent"
         />
       </div>
     );
