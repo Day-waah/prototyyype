@@ -22,7 +22,7 @@ export const ContactForm = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="font-display text-3xl md:text-4xl lg:text-5xl text-foreground text-center italic mb-12"
+          className="font-display text-3xl md:text-4xl lg:text-5xl text-foreground text-center mb-12"
         >
           Get in Touch
         </motion.h2>
