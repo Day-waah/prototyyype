@@ -47,15 +47,15 @@ const AnimatedText = ({ text, className, highlightWords = [] }: { text: string; 
   );
 };
 
-// Floating aerial particles
+// Floating aerial particles - more drone-oriented
 const AerialParticles = () => {
-  const particles = Array.from({ length: 20 }, (_, i) => ({
+  const particles = Array.from({ length: 25 }, (_, i) => ({
     id: i,
-    size: Math.random() * 4 + 2,
+    size: Math.random() * 3 + 1,
     x: Math.random() * 100,
     y: Math.random() * 100,
-    duration: Math.random() * 15 + 10,
-    delay: Math.random() * 5,
+    duration: Math.random() * 20 + 15,
+    delay: Math.random() * 8,
   }));
 
   return (
@@ -63,7 +63,7 @@ const AerialParticles = () => {
       {particles.map((particle) => (
         <motion.div
           key={particle.id}
-          className="absolute rounded-full bg-primary/30"
+          className="absolute rounded-full bg-primary/40"
           style={{
             width: particle.size,
             height: particle.size,
@@ -71,10 +71,10 @@ const AerialParticles = () => {
             top: `${particle.y}%`,
           }}
           animate={{
-            x: [0, 50, -30, 20, 0],
-            y: [0, -40, 20, -60, 0],
-            opacity: [0.2, 0.6, 0.3, 0.5, 0.2],
-            scale: [1, 1.2, 0.8, 1.1, 1],
+            x: [0, 80, -40, 60, 0],
+            y: [0, -60, 30, -80, 0],
+            opacity: [0.1, 0.5, 0.2, 0.6, 0.1],
+            scale: [1, 1.5, 0.8, 1.2, 1],
           }}
           transition={{
             duration: particle.duration,
@@ -96,23 +96,45 @@ const SwirlOverlay = () => (
       rotate: [0, 360],
     }}
     transition={{
-      duration: 120,
+      duration: 180,
       repeat: Infinity,
       ease: "linear",
     }}
   >
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%]">
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/5 to-transparent blur-3xl" />
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[180%] h-[180%]">
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/8 to-transparent blur-3xl" />
     </div>
   </motion.div>
 );
 
-// Flying drone silhouettes
+// Radar scanning effect
+const RadarScan = () => (
+  <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <motion.div
+      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+      animate={{ rotate: 360 }}
+      transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+    >
+      <div className="w-[600px] h-[600px] relative">
+        <div className="absolute inset-0 rounded-full border border-primary/10" />
+        <div 
+          className="absolute top-1/2 left-1/2 w-1/2 h-[2px] origin-left"
+          style={{
+            background: 'linear-gradient(90deg, hsl(var(--primary) / 0.4) 0%, transparent 100%)',
+          }}
+        />
+      </div>
+    </motion.div>
+  </div>
+);
+
+// Flying drone silhouettes with propeller animation
 const FlyingDrones = () => {
   const drones = [
-    { id: 1, startX: -10, endX: 110, y: 20, duration: 25, delay: 0, size: 30 },
-    { id: 2, startX: 110, endX: -10, y: 60, duration: 30, delay: 5, size: 20 },
-    { id: 3, startX: -10, endX: 110, y: 80, duration: 35, delay: 10, size: 25 },
+    { id: 1, startX: -15, endX: 115, y: 15, duration: 28, delay: 0, size: 35 },
+    { id: 2, startX: 115, endX: -15, y: 50, duration: 32, delay: 4, size: 25 },
+    { id: 3, startX: -15, endX: 115, y: 75, duration: 26, delay: 8, size: 30 },
+    { id: 4, startX: 115, endX: -15, y: 30, duration: 35, delay: 12, size: 20 },
   ];
 
   return (
@@ -125,8 +147,8 @@ const FlyingDrones = () => {
           initial={{ x: `${drone.startX}vw`, opacity: 0 }}
           animate={{ 
             x: `${drone.endX}vw`, 
-            opacity: [0, 0.4, 0.4, 0],
-            y: [0, -10, 5, -5, 0]
+            opacity: [0, 0.5, 0.5, 0],
+            y: [0, -15, 8, -12, 5, 0]
           }}
           transition={{
             duration: drone.duration,
@@ -138,27 +160,103 @@ const FlyingDrones = () => {
           <svg 
             width={drone.size} 
             height={drone.size} 
-            viewBox="0 0 32 32" 
+            viewBox="0 0 40 40" 
             fill="none"
             style={{ transform: drone.startX > drone.endX ? 'scaleX(-1)' : 'none' }}
           >
+            {/* Drone body */}
             <path 
-              d="M16 8L24 16L16 20L8 16L16 8Z" 
+              d="M20 12L28 20L20 26L12 20L20 12Z" 
               fill="hsl(var(--primary))" 
-              fillOpacity="0.5"
+              fillOpacity="0.6"
             />
+            {/* Arms */}
             <path 
-              d="M4 14L8 16L4 18M28 14L24 16L28 18" 
+              d="M6 16L12 20L6 24M34 16L28 20L34 24" 
               stroke="hsl(var(--primary))" 
               strokeWidth="1.5"
               strokeOpacity="0.5"
             />
+            <path 
+              d="M16 6L20 12L24 6M16 34L20 26L24 34" 
+              stroke="hsl(var(--primary))" 
+              strokeWidth="1.5"
+              strokeOpacity="0.5"
+            />
+            {/* Propellers - animated circles */}
+            <motion.circle
+              cx="6" cy="20" r="4"
+              stroke="hsl(var(--primary))"
+              strokeWidth="0.5"
+              strokeOpacity="0.4"
+              fill="none"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 0.2, repeat: Infinity, ease: "linear" }}
+            />
+            <motion.circle
+              cx="34" cy="20" r="4"
+              stroke="hsl(var(--primary))"
+              strokeWidth="0.5"
+              strokeOpacity="0.4"
+              fill="none"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 0.2, repeat: Infinity, ease: "linear" }}
+            />
+            <motion.circle
+              cx="20" cy="6" r="4"
+              stroke="hsl(var(--primary))"
+              strokeWidth="0.5"
+              strokeOpacity="0.4"
+              fill="none"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 0.2, repeat: Infinity, ease: "linear" }}
+            />
+            <motion.circle
+              cx="20" cy="34" r="4"
+              stroke="hsl(var(--primary))"
+              strokeWidth="0.5"
+              strokeOpacity="0.4"
+              fill="none"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 0.2, repeat: Infinity, ease: "linear" }}
+            />
+            {/* Center light */}
+            <motion.circle
+              cx="20" cy="19" r="2"
+              fill="hsl(var(--primary))"
+              animate={{ opacity: [0.4, 1, 0.4] }}
+              transition={{ duration: 1, repeat: Infinity }}
+            />
           </svg>
+          {/* Trail effect */}
+          <motion.div
+            className="absolute top-1/2 -translate-y-1/2 h-[1px] bg-gradient-to-l from-primary/30 to-transparent"
+            style={{ 
+              width: drone.size * 2,
+              left: drone.startX < drone.endX ? -drone.size * 2 : drone.size,
+            }}
+          />
         </motion.div>
       ))}
     </div>
   );
 };
+
+// Grid overlay for tech look
+const GridOverlay = () => (
+  <div className="absolute inset-0 pointer-events-none opacity-[0.03]">
+    <div 
+      className="absolute inset-0"
+      style={{
+        backgroundImage: `
+          linear-gradient(hsl(var(--primary)) 1px, transparent 1px),
+          linear-gradient(90deg, hsl(var(--primary)) 1px, transparent 1px)
+        `,
+        backgroundSize: '60px 60px',
+      }}
+    />
+  </div>
+);
 
 export const PrecisionSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -191,18 +289,24 @@ export const PrecisionSection = () => {
         <div className="absolute inset-0 bg-background/20" />
       </motion.div>
 
+      {/* Grid Overlay */}
+      <GridOverlay />
+      
       {/* Aerial Particles */}
       <AerialParticles />
       
       {/* Swirl Overlay */}
       <SwirlOverlay />
       
+      {/* Radar Scan */}
+      <RadarScan />
+      
       {/* Flying Drones */}
       <FlyingDrones />
 
       {/* Vignette effect */}
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/50 pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-r from-background/30 via-transparent to-background/30 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/60 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-r from-background/40 via-transparent to-background/40 pointer-events-none" />
 
       {/* Content */}
       <motion.div 
