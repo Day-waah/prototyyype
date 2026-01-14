@@ -3,6 +3,7 @@ import { useState } from "react";
 import news1 from "@/assets/news-1.jpg";
 import news2 from "@/assets/news-2.jpg";
 import news3 from "@/assets/news-3.jpg";
+import { MinimalParticles, SubtleGrid, MinimalScanLine } from "./TechEffectsOverlay";
 
 const newsItems = [
   {
@@ -116,7 +117,16 @@ export const MediaSection = () => {
 
   return (
     <section id="media" className="relative py-24 overflow-hidden bg-tactical-darker">
-      <div className="max-w-6xl mx-auto px-4">
+      {/* Tech effects */}
+      <SubtleGrid opacity={0.02} />
+      <MinimalParticles count={10} opacity={0.2} />
+      <MinimalScanLine interval={15} />
+      
+      {/* Smooth transitions */}
+      <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-background to-transparent pointer-events-none z-10" />
+      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-background to-transparent pointer-events-none z-10" />
+      
+      <div className="max-w-6xl mx-auto px-4 relative z-20">
         <motion.h2
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { AnimatedBubbles, SwirlingGlow } from "./AnimatedBubbles";
+import { MinimalParticles, SubtleGrid, FloatingDrones } from "./TechEffectsOverlay";
 
 const aboutCards = [
   {
@@ -52,9 +53,18 @@ export const AboutSection = () => {
       {/* Dark base background */}
       <div className="absolute inset-0 bg-tactical-darker" />
       
+      {/* Tech effects */}
+      <SubtleGrid opacity={0.02} />
+      <MinimalParticles count={10} opacity={0.25} />
+      <FloatingDrones count={2} />
+      
       {/* Animated swirling glow bubbles - matching Figma design */}
       <SwirlingGlow />
       <AnimatedBubbles />
+      
+      {/* Smooth gradient transitions */}
+      <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent pointer-events-none z-10" />
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent pointer-events-none z-10" />
 
       <div className="max-w-6xl mx-auto px-4 relative z-10">
         <motion.h2
