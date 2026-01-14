@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { MinimalParticles, SubtleGrid, MinimalHUDCorners } from "./TechEffectsOverlay";
 
 // Animated 3D Drone Component
 const AnimatedDrone = () => {
@@ -200,9 +201,14 @@ export const HeroSection = () => {
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-background">
+      {/* Tech effects layer */}
+      <SubtleGrid opacity={0.02} />
+      <MinimalParticles count={15} opacity={0.3} />
+      <MinimalHUDCorners size={35} />
+
       {/* Ambient Background Glow */}
       <motion.div 
-        className="absolute w-[800px] h-[800px] rounded-full opacity-30 pointer-events-none"
+        className="absolute w-[800px] h-[800px] rounded-full opacity-30 pointer-events-none z-0"
         style={{
           background: "radial-gradient(circle, hsl(var(--primary) / 0.2) 0%, transparent 60%)",
           filter: "blur(100px)",
@@ -222,7 +228,10 @@ export const HeroSection = () => {
       />
 
       {/* Dark gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-tactical-dark via-background to-tactical-darker" />
+      <div className="absolute inset-0 bg-gradient-to-b from-tactical-dark via-background to-tactical-darker -z-10" />
+      
+      {/* Bottom gradient for smooth transition */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none z-20" />
 
       {/* Hero Content */}
       <div className="relative z-10 flex flex-col items-center text-center px-4 pt-20">

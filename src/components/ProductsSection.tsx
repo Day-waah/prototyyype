@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import droneMq9 from "@/assets/drone-mq9.jpg";
 import droneT82 from "@/assets/drone-t82.jpg";
 import droneVtol from "@/assets/drone-vtol.jpg";
+import { MinimalParticles, SubtleGrid, MinimalScanLine, TargetingReticle } from "./TechEffectsOverlay";
 
 const products = [
   {
@@ -190,8 +191,19 @@ export const ProductsSection = () => {
 
   return (
     <section id="products" className="relative py-24 overflow-hidden bg-tactical-darker">
+      {/* Tech effects */}
+      <SubtleGrid opacity={0.025} />
+      <MinimalParticles count={8} opacity={0.2} />
+      <MinimalScanLine interval={10} />
+      <TargetingReticle x={15} y={40} />
+      <TargetingReticle x={85} y={60} />
+      
       {/* Background */}
       <WavyLinesBackground />
+      
+      {/* Smooth transitions */}
+      <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-background to-transparent pointer-events-none z-10" />
+      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-background to-transparent pointer-events-none z-10" />
 
       <div className="max-w-6xl mx-auto px-4 relative z-10">
         <motion.h2

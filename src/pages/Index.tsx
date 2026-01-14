@@ -13,22 +13,23 @@ import { SectionTransition } from "@/components/SectionTransition";
 
 const Index = () => {
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-background overflow-x-hidden">
       <Navbar />
       <HeroSection />
       <PrecisionSection />
-      <SectionTransition variant="line" />
+      <SectionTransition variant="tech" />
       <AboutSection />
-      <SectionTransition variant="dots" />
+      <SectionTransition variant="circuit" />
       <ProductsSection />
-      <SectionTransition variant="line" />
+      <SectionTransition variant="tech" />
       <TrainingSection />
       <SectionTransition variant="dots" />
       <FutureVisionSection />
-      <SectionTransition variant="line" />
+      <SectionTransition variant="tech" />
       <CareersSection />
-      <SectionTransition variant="dots" />
+      <SectionTransition variant="circuit" />
       <MediaSection />
+      <SectionTransition variant="dots" />
       <ContactForm />
       <Footer />
     </main>

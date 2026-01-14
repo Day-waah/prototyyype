@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import trainingBg from "@/assets/training-bg.jpg";
+import { MinimalParticles, MinimalHUDCorners, MinimalScanLine, DataStreams } from "./TechEffectsOverlay";
 
 const trainingPrograms = [
   {
@@ -57,6 +58,16 @@ export const TrainingSection = () => {
         <div className="absolute inset-0 bg-tactical-darker/85" />
         <div className="absolute inset-0 bg-gradient-to-t from-tactical-darker via-transparent to-tactical-darker/50" />
       </div>
+      
+      {/* Tech effects */}
+      <MinimalParticles count={12} opacity={0.3} />
+      <MinimalHUDCorners size={45} />
+      <MinimalScanLine vertical interval={12} />
+      <DataStreams />
+      
+      {/* Smooth transitions */}
+      <div className="absolute top-0 left-0 right-0 h-28 bg-gradient-to-b from-background to-transparent pointer-events-none z-10" />
+      <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-background to-transparent pointer-events-none z-10" />
 
       <div className="max-w-4xl mx-auto px-4 relative z-10">
         <motion.div

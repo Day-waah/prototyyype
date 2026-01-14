@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { MinimalParticles, SubtleGrid, SubtleRadarPulse } from "./TechEffectsOverlay";
 
 const timelineItems = [
   { title: "AI-Powered Autonomy" },
@@ -98,9 +99,18 @@ const TimelineNode = ({ index, title }: { index: number; title: string }) => (
 export const FutureVisionSection = () => {
   return (
     <section id="vision" className="relative py-32 overflow-hidden bg-tactical-darker">
+      {/* Tech effects */}
+      <SubtleGrid opacity={0.02} />
+      <MinimalParticles count={10} opacity={0.25} />
+      <SubtleRadarPulse />
+      
       {/* Wavy lines corners */}
       <WavyLinesCorner position="left" />
       <WavyLinesCorner position="right" />
+      
+      {/* Smooth transitions */}
+      <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent pointer-events-none z-10" />
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent pointer-events-none z-10" />
 
       <div className="max-w-5xl mx-auto px-4 relative z-10">
         {/* Faded IMPLEMENTATION text */}
